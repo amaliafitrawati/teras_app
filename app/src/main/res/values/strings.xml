@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">teras_app</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_board">Board</string>
+    <string name="menu_add_story">Add Story</string>
+    <string name="menu_browse_story">Browse Story</string>
+    <string name="menu_account">Account</string>
 </resources>
