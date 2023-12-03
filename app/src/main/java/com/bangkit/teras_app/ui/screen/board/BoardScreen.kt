@@ -7,7 +7,7 @@ import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun BoardScreen(modifier: Modifier = Modifier) {
-    Text(text = "Board Screen")
+
 }
 
 @Preview(showBackground = true)

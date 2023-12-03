@@ -1,4 +1,4 @@
-package com.bangkit.teras_app.ui.model
+package com.bangkit.teras_app.model
 
 import androidx.compose.ui.graphics.vector.ImageVector
 

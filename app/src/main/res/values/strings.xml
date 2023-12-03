@@ -5,4 +5,11 @@
     <string name="menu_add_story">Add Story</string>
     <string name="menu_browse_story">Browse Story</string>
     <string name="menu_account">Account</string>
+    <string name="register_header">Register Now</string>
+    <string name="register_text">Please register your account</string>
+    <string name="register_btn">Register</string>
+    <string name="name">Name</string>
+    <string name="username">Username</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
 </resources>
