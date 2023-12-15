@@ -1,0 +1,10 @@
+Flask
+gunicorn
+tensorflow
+pandas
+numpy
+keras
+math
+json
+scikit-learn
+datetime
