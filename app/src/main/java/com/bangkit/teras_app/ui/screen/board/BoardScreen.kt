@@ -1,17 +1,96 @@
+@file:Suppress("UNUSED_PARAMETER")
+
 package com.bangkit.teras_app.ui.screen.board
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.bangkit.teras_app.R
+import com.bangkit.teras_app.ViewModelFactory
+import com.bangkit.teras_app.data.RiceProductionRepository
+import com.bangkit.teras_app.model.RiceProduction
+import com.bangkit.teras_app.ui.common.UiState
 
 @Composable
-fun BoardScreen(modifier: Modifier = Modifier) {
-
+fun BoardScreen(
+    modifier : Modifier = Modifier,
+    viewModel : BoardViewModel = viewModel(factory = ViewModelFactory(RiceProductionRepository()))){
+    val query by viewModel.query
+    viewModel.uiState.collectAsState(initial = UiState.Loading).value.let { uiState ->
+        when(uiState){
+            is UiState.Loading -> {
+                viewModel.filterByYear(query)
+            }
+            is UiState.Success -> {
+                Leaderboard(uiState.data)
+            }
+            is UiState.Error -> {}
+        }
+    }
 }
 
-@Preview(showBackground = true)
+
 @Composable
-fun BoardScreenPreview(){
-    BoardScreen()
+fun Leaderboard(riceProduction :  List<RiceProduction>) {
+    LazyColumn {
+        items(riceProduction) { entry ->
+            BoardContent(entry)
+        }
+    }
 }
+
+@Composable
+fun BoardContent(
+    rice: RiceProduction) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(22.dp),
+        horizontalArrangement = Arrangement.SpaceBetween){
+        Column{
+            val status : String
+            val statusColor : Color
+            if(rice.isSurplus){
+                status = "Surplus"
+                statusColor = colorResource(R.color.greenBtn)
+            }else{
+                status = "Defisit"
+                statusColor = Color.Red
+            }
+
+            Text(text = rice.province)
+            Text(text = status, color = statusColor)
+            Text(text = "Total Produksi : ${rice.totalProduction}")
+        }
+        Row{
+            if(rice.ranking <= 3) {
+                Image(
+                    painter =
+                    painterResource(R.drawable.ic_rank),
+                    contentDescription = "Ranking",
+                    modifier = Modifier
+                        .size(20.dp)
+                        .padding(end = 5.dp)
+                )
+            }
+            Text(text = "Peringkat ${rice.ranking}")
+        }
+    }
+}
+

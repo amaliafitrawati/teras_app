@@ -10,4 +10,5 @@
     <color name="btnColor">#51549A</color>
     <color name="lightGray">#959595</color>
     <color name="hitGray">#A4ADB4</color>
+    <color name="greenBtn">#2bc48a</color>
 </resources>

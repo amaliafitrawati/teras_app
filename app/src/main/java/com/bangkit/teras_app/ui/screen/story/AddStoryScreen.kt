@@ -7,11 +7,10 @@ import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun AddStoryScreen(modifier: Modifier = Modifier) {
-    Text(text = "Add Story Screen")
+    Text("Add Story Screen")
 }
 
 @Preview(showBackground = true)
 @Composable
 fun AddStoryPreview(){
-    AddStoryScreen()
 }

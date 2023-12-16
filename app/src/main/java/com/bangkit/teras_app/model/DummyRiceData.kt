@@ -43,35 +43,35 @@ object DummyRiceData {
             "DKI JAKARTA",
             5,
             2343242.4543F,
-            2023,
+            2024,
             true
         ),RiceProduction(
             7,
             "LAMPUNG",
             15,
             2242.4543F,
-            2023,
+            2025,
             false
         ),RiceProduction(
             8,
             "DKI JAKARTA",
             5,
             2343242.4543F,
-            2023,
+            2026,
             true
         ),RiceProduction(
             9,
             "DKI JAKARTA",
             5,
             2343242.4543F,
-            2023,
+            2027,
             true
         ),RiceProduction(
             10,
             "DKI JAKARTA",
-            5,
+            67,
             2343242.4543F,
-            2023,
+            2028,
             true
         ),
     )
