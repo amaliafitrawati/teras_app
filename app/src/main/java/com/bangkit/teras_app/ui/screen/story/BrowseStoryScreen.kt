@@ -35,7 +35,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.bangkit.teras_app.R
 import com.bangkit.teras_app.ViewModelFactory
 import com.bangkit.teras_app.data.RiceProductionRepository
-import com.bangkit.teras_app.model.Forum
+import com.bangkit.teras_app.data.response.ForumData
 import com.bangkit.teras_app.ui.common.UiState
 
 @Composable
@@ -61,10 +61,10 @@ fun BrowseStoryScreen(
 
 @Composable
 fun StoryData(
-    id : Int,
+    id: Int,
     title: String,
-    content : String,
-    photo: Int,
+    content: String,
+    photo: String? = null,
     modifier: Modifier = Modifier
 ) {
 
@@ -77,7 +77,7 @@ fun StoryData(
             .background(Color.White)
     ) {
         Image(
-            painter = painterResource(photo),
+            painter = painterResource(R.drawable.img_dummy),
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier
@@ -85,13 +85,15 @@ fun StoryData(
         )
         Column(
             modifier = Modifier
-                .padding(start = 8.dp, end = 5.dp)){
+                .padding(start = 8.dp, end = 5.dp)
+                .fillMaxWidth()){
             Text(text = title,
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.padding(bottom = 2.dp))
             Text(
                 text = truncatedContent,
                 style = MaterialTheme.typography.bodyMedium)
+            Spacer(modifier = Modifier.weight(1f))
             Row(
                 modifier = Modifier.fillMaxWidth()
             ){
@@ -125,7 +127,7 @@ fun StoryData(
 
 @Composable
 fun StoryContent(
-    listStory : List<Forum>,
+    listStory : List<ForumData>,
     modifier: Modifier = Modifier
                 .padding(8.dp)
                 .clip(shape = RoundedCornerShape(10.dp))){
@@ -139,7 +141,7 @@ fun StoryContent(
                     id = story.id,
                     title = story.title,
                     content = story.content,
-                    photo = story.image,
+                    photo = story?.image,
                     modifier = modifier.fillMaxWidth()
                 )
             }

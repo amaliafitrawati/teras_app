@@ -6,6 +6,6 @@ data class Forum(
     val id: Int,
     val title: String,
     val content: String,
-    val image: Int,
+    val image: Int?,
     val date: Date?
 )
