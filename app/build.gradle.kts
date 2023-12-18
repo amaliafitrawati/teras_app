@@ -16,7 +16,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "BASE_URL", "\"https://teras-backend-hqlboaqepq-et.a.run.app/\"")
+        buildConfigField("String", "BASE_URL", "\"https://teras-backend-l3azxq25lq-et.a.run.app/\"")
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -71,6 +71,7 @@ dependencies{
     implementation("androidx.lifecycle:lifecycle-livedata:2.3.1")
     implementation("androidx.room:room-runtime:2.4.3")
     implementation("androidx.room:room-ktx:2.4.3")
+    implementation("androidx.compose.material:material-icons-extended:1.5.4")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
