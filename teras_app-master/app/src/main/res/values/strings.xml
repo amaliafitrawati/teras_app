@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">teras_app</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_board">Board</string>
+    <string name="menu_add_story">Add Story</string>
+    <string name="menu_browse_story">Browse Story</string>
+    <string name="menu_account">Account</string>
+    <string name="register_header">Register Now</string>
+    <string name="register_text">Please register your account</string>
+    <string name="register_btn">Register</string>
+    <string name="name">Name</string>
+    <string name="username">Username</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="like">Like</string>
+    <string name="unlike">Unlike</string>
+    <string name="detail">Detail</string>
+    <string name="login_header">Selamat Datang di Teras</string>
+    <string name="desk_apk">Aplikasi Ketahanan Pangan untuk Indonesia</string>
+    <string name="login_button">Login</string>
+</resources>
