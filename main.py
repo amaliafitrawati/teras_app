@@ -141,7 +141,7 @@ class Regressor:
 
     def load_model(self):
         # Load your model from the saved .h5 file
-        return keras.models.load_model("model.h5")
+        return keras.models.load_model("model_rice.h5")
 
     @staticmethod
     def generate_dates(start, interval_forecast):
@@ -228,7 +228,28 @@ def index():
         result.fetch_data_result()
 
         b = inputBeras()
+
+        latitudes = [
+            4.695135, -8.4095178, -6.4058172, -3.5778471, 0.6999372, -6.211544,
+            -1.4851831, -7.090911, -7.150975, -7.5360639, -0.2787808, -3.0926415,
+            -1.6814878, 1.6406296, 3.07309, -2.7410513, 3.9456514,  -4.5585849, -3.2384616,
+            1.5709993, -8.6529334, -8.6573819, -4.269928, -1.3361154, 0.2933469,
+            -2.8441371, -3.6687994, -1.4300254, -4.14491, 0.6246932, -0.7399397,
+            -3.3194374, 2.1153547, -7.8753849, 0
+        ]
+        longitudes = [
+            96.7493993, 115.188916, 106.0640179, 102.3463875, 122.4467238, 106.845172,
+            102.4380581, 107.668887, 110.1402594, 112.2384017, 111.4752851, 115.2837585,
+            113.3823545, 116.419389, 116.04139, 106.4405872, 108.1428669, 105.4068079, 130.1452734,
+            127.8087693, 117.3616476, 121.0793705, 138.0803529, 133.1747162, 101.7068294,
+            119.2320784, 119.9740534, 121.4456179, 122.174605, 123.9750018, 100.8000051,
+            103.914399, 99.5450974, 110.4262088, 0
+        ]
+
+        # b.Beras_process['latitudes'] = latitudes
+        # b.Beras_process['longitudes'] = longitudes
         processed_data = b.Beras_process
+
 
         # Use the pre-trained model for predictions
         regressor_instance = Regressor(daily_df=processed_data)
@@ -236,11 +257,42 @@ def index():
 
         # Assuming next_year_predictions is a list of predictions
         # return jsonify({"predictions": next_year_predictions})
-        predictions_with_province = [
-        {"province": province, "prediction": prediction}
-        for province, prediction in zip(processed_data.columns[1:], next_year_predictions)
+        # predictions_with_province = [
+        # {"province": province, "prediction": prediction, "latitudes":latitudes, "longitudes":longitudes}
+        # for province, prediction in zip(processed_data.columns[1:], next_year_predictions,latitudes,longitudes)
+        # ]
+
+        # Urutkan berdasarkan nilai prediksi dalam urutan menurun
+        # sorted_predictions = sorted(predictions_with_province, key=lambda x: x["prediction"], reverse=True)
+
+        # Tambahkan peringkat ke dalam hasil yang telah diurutkan
+        # ranked_predictions = [
+
+        #     {"province": data["province"], "prediction": data["prediction"], "latitudes":data[latitudes], "longitudes":data[longitudes],"rank": rank}
+        #     for rank, data in enumerate(sorted_predictions)
+        # ]
+        predictions_with_province_and_location = [
+            {
+                "province": province,
+                "prediction": prediction,
+                "latitude": lat,
+                "longitude": lon,
+            }
+            for province, prediction, lat, lon in zip(processed_data.columns[1:], next_year_predictions, latitudes, longitudes)
+        ]
+        sorted_predictions = sorted(predictions_with_province_and_location, key=lambda x: x["prediction"], reverse=True)
+
+        ranked_predictions = [
+            {
+                "province": data["province"],
+                "prediction": data["prediction"],
+                "latitude": data["latitude"],  # Access latitude directly from data
+                "longitude": data["longitude"],  # Access longitude directly from data
+                "rank": rank
+            }
+            for rank, data in enumerate(sorted_predictions)
         ]
 
-        return jsonify(predictions_with_province)
+        return jsonify(ranked_predictions)
 if __name__ == "__main__":
   app.run(debug=True)
