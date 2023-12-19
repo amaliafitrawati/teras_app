@@ -6,13 +6,9 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.bangkit.teras_app.ui.screen.home.HomeScreen
+import androidx.navigation.compose.rememberNavController
 import com.bangkit.teras_app.ui.screen.login.LoginScreen
-import com.bangkit.teras_app.ui.screen.register.RegisterScreen
 import com.bangkit.teras_app.ui.theme.Teras_appTheme
 
 class MainActivity : ComponentActivity() {

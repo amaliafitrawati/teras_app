@@ -25,6 +25,8 @@ import com.bangkit.teras_app.ui.screen.account.AccountScreen
 import com.bangkit.teras_app.ui.screen.story.AddStoryScreen
 import com.bangkit.teras_app.ui.screen.board.BoardScreen
 import com.bangkit.teras_app.ui.screen.home.HomeScreen
+import com.bangkit.teras_app.ui.screen.login.LoginScreen
+import com.bangkit.teras_app.ui.screen.register.RegisterScreen
 import com.bangkit.teras_app.ui.screen.story.BrowseStoryScreen
 
 @Composable
@@ -42,7 +44,7 @@ fun TerasApp(
     val currentRoute = currentRoute(navController).toString()
     Scaffold(
         topBar = {
-            if (currentRoute !in listOf("home", "account")) {
+            if (currentRoute !in listOf("home", "account","register","login")) {
                 CenterAlignedTopAppBar(
                     title = {
                         Text(text = stringResource(topAppBarLabel(screenName = currentRoute)),
@@ -52,13 +54,15 @@ fun TerasApp(
             }
         },
         bottomBar = {
-            BottomBar(navController,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .graphicsLayer {
-                        shadowElevation = 50f
-                    }
-            )
+            if (currentRoute !in listOf("register","login")) {
+                BottomBar(navController,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .graphicsLayer {
+                            shadowElevation = 50f
+                        }
+                )
+            }
         },
         modifier = modifier
     ){ innerPadding ->
@@ -80,7 +84,13 @@ fun TerasApp(
                 BrowseStoryScreen()
             }
             composable(Screen.Account.route) {
-                AccountScreen()
+                AccountScreen(navController = navController)
+            }
+            composable(Screen.Login.route) {
+                LoginScreen(navController = navController)
+            }
+            composable(Screen.Register.route) {
+                RegisterScreen(navController = navController)
             }
         }
     }

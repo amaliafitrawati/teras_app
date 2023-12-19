@@ -20,4 +20,5 @@
     <string name="login_header">Selamat Datang di Teras</string>
     <string name="desk_apk">Aplikasi Ketahanan Pangan untuk Indonesia</string>
     <string name="login_button">Login</string>
+    <string name="login_here">Login here</string>
 </resources>

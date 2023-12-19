@@ -32,16 +32,21 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.bangkit.teras_app.R
 import com.bangkit.teras_app.ViewModelFactory
 import com.bangkit.teras_app.data.LockScreenOrientation
 import com.bangkit.teras_app.data.RiceProductionRepository
+import com.bangkit.teras_app.data.response.LoginResponse
 import com.bangkit.teras_app.ui.components.CircularLoading
 import com.bangkit.teras_app.ui.components.EmailTextField
 import com.bangkit.teras_app.ui.components.PasswordTextField
+import com.bangkit.teras_app.ui.navigation.Screen
 
 @Composable
 fun LoginScreen(
+    navController: NavHostController,
     viewModel : LoginViewModel = viewModel(factory = ViewModelFactory(RiceProductionRepository())),
     modifier: Modifier = Modifier
 ) {
@@ -52,6 +57,15 @@ fun LoginScreen(
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+
+    val response: LoginResponse
+    if (loginResponse != null) {
+        response = loginResponse as LoginResponse
+
+        if (response.success == 1) {
+            navController.navigate(Screen.Home.route)
+        }
+    }
 
 
     Column(
@@ -125,10 +139,4 @@ fun LoginScreen(
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun LoginScreenPreview(){
-    LoginScreen()
 }
