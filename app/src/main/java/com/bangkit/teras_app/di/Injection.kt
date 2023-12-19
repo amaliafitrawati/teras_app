@@ -1,9 +1,14 @@
 package com.bangkit.teras_app.di
 
-import com.bangkit.teras_app.data.RiceProductionRepository
+import android.content.Context
+import com.bangkit.teras_app.data.TerasRepository
+import com.bangkit.teras_app.data.pref.UserPreference
+import com.bangkit.teras_app.data.pref.dataStore
+
 
 object Injection {
-    fun provideRepository() : RiceProductionRepository{
-        return RiceProductionRepository.getInstance()
+    fun provideRepository(context : Context) : TerasRepository{
+        val userPreference = UserPreference.getInstance(context.dataStore)
+        return TerasRepository.getInstance(userPreference)
     }
 }

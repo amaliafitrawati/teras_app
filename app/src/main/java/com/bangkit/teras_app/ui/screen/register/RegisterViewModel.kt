@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.bangkit.teras_app.data.RiceProductionRepository
+import com.bangkit.teras_app.data.TerasRepository
 import com.bangkit.teras_app.data.api.ApiConfig
 import com.bangkit.teras_app.data.response.RegisterData
 import com.bangkit.teras_app.data.response.RegisterResponse
@@ -14,7 +14,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class RegisterViewModel(private val repository: RiceProductionRepository) : ViewModel() {
+class RegisterViewModel(private val repository: TerasRepository) : ViewModel() {
     private val _register = MutableLiveData<RegisterResponse>()
     val register: LiveData<RegisterResponse> = _register
 

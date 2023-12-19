@@ -3,6 +3,7 @@
 package com.bangkit.teras_app.ui.screen.home
 
 import android.content.pm.ActivityInfo
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -31,6 +32,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -38,6 +40,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -45,8 +48,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.bangkit.teras_app.R
+import com.bangkit.teras_app.ViewModelFactory
 import com.bangkit.teras_app.data.LockScreenOrientation
+import com.bangkit.teras_app.data.pref.UserModel
+import com.bangkit.teras_app.di.Injection
+import com.bangkit.teras_app.ui.screen.login.LoginViewModel
 import com.bangkit.teras_app.ui.theme.plusjakartasansFontFamily
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -54,12 +62,18 @@ import com.google.accompanist.pager.PagerState
 import kotlinx.coroutines.delay
 
 @Composable
-fun HomeScreen(){
+fun HomeScreen(
+    viewModel : HomeViewModel = viewModel(factory = ViewModelFactory(Injection.provideRepository(LocalContext.current)))){
     LockScreenOrientation(orientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
 
     Box(modifier = Modifier
-        .fillMaxSize()
-    ){
+        .fillMaxSize()){
+        LaunchedEffect(viewModel.getSession()) {
+            viewModel.getSession().collect { newUser ->
+
+            }
+        }
+
         Column {
             GreetingSection()
             AutoSlidingImage()
@@ -117,7 +131,7 @@ fun GreetingSection(
                         .size(24.dp)
                 )
                 Text(
-                    text = "Malang, JawaTimur, Indonesia",
+                    text = "Malang",
                     style = TextStyle(
                         fontFamily = plusjakartasansFontFamily,
                         fontWeight = FontWeight.Normal,

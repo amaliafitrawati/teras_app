@@ -3,10 +3,12 @@ package com.bangkit.teras_app.data
 import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
+import android.location.Location
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.platform.LocalContext
 import com.bangkit.teras_app.R
+import com.google.android.gms.maps.model.LatLng
 
 @Composable
 fun LockScreenOrientation(orientation: Int) {
@@ -48,3 +50,14 @@ fun checkMinus(value: Double?): Boolean {
 }
 
 
+private fun calculateDistance(startLatLng: LatLng, endLatLng: LatLng): Float {
+    val results = FloatArray(1)
+    Location.distanceBetween(
+        startLatLng.latitude,
+        startLatLng.longitude,
+        endLatLng.latitude,
+        endLatLng.longitude,
+        results
+    )
+    return results[0]
+}

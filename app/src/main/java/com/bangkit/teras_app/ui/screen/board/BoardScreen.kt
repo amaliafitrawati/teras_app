@@ -16,10 +16,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -27,17 +27,17 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.bangkit.teras_app.R
 import com.bangkit.teras_app.ViewModelFactory
 import com.bangkit.teras_app.data.LockScreenOrientation
-import com.bangkit.teras_app.data.RiceProductionRepository
+import com.bangkit.teras_app.data.TerasRepository
 import com.bangkit.teras_app.data.checkMinus
 import com.bangkit.teras_app.data.response.PredictionData
+import com.bangkit.teras_app.di.Injection
 import com.bangkit.teras_app.ui.common.UiState
-import com.bangkit.teras_app.ui.components.CircularLoading
 import com.bangkit.teras_app.ui.components.loadingAnimation
 
 @Composable
 fun BoardScreen(
     modifier : Modifier = Modifier,
-    viewModel : BoardViewModel = viewModel(factory = ViewModelFactory(RiceProductionRepository()))){
+    viewModel : BoardViewModel = viewModel(factory = ViewModelFactory(Injection.provideRepository(LocalContext.current)))){
     LockScreenOrientation(orientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
 
     viewModel.uiState.collectAsState(initial = UiState.Loading).value.let { uiState ->

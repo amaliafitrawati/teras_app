@@ -22,6 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -36,7 +37,8 @@ import androidx.navigation.NavHostController
 import com.bangkit.teras_app.R
 import com.bangkit.teras_app.ViewModelFactory
 import com.bangkit.teras_app.data.LockScreenOrientation
-import com.bangkit.teras_app.data.RiceProductionRepository
+import com.bangkit.teras_app.data.TerasRepository
+import com.bangkit.teras_app.di.Injection
 import com.bangkit.teras_app.model.listProvince
 import com.bangkit.teras_app.ui.components.EmailTextField
 import com.bangkit.teras_app.ui.components.NameTextField
@@ -46,8 +48,8 @@ import com.bangkit.teras_app.ui.components.SampleSpinner
 @Composable
 fun RegisterScreen(
     navController: NavHostController,
-    viewModel : RegisterViewModel = viewModel(factory = ViewModelFactory(RiceProductionRepository())),
-    modifier: Modifier = Modifier) {
+    modifier: Modifier = Modifier,
+    viewModel : RegisterViewModel = viewModel(factory = ViewModelFactory(Injection.provideRepository(LocalContext.current)))){
     LockScreenOrientation(orientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
 
     var name by remember { mutableStateOf("") }

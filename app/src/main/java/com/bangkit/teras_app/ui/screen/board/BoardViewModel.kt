@@ -5,7 +5,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bangkit.teras_app.data.RiceProductionRepository
+import com.bangkit.teras_app.data.TerasRepository
 import com.bangkit.teras_app.data.api.ApiConfig
 import com.bangkit.teras_app.data.response.PredictionData
 import com.bangkit.teras_app.data.response.PredictionResponse
@@ -17,24 +17,9 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class BoardViewModel(private val repository: RiceProductionRepository) : ViewModel(){
+class BoardViewModel(private val repository: TerasRepository) : ViewModel(){
     private val _uiState: MutableStateFlow<UiState<List<PredictionData>>> = MutableStateFlow(UiState.Loading)
     val uiState: StateFlow<UiState<List<PredictionData>>> get() = _uiState
-
-    private val _query = mutableStateOf("")
-    val query: State<String> get() = _query
-
-//    fun filterByYear(year : String) = viewModelScope.launch {
-//        _query.value = year
-//        val year2 = null
-//        repository.getRiceByYear(year2)
-//            .catch{
-//                _uiState.value = UiState.Error(it.message.toString())
-//            }
-//            .collect{
-//                _uiState.value = UiState.Success(it)
-//            }
-//    }
 
     fun getAllPrediction(){
         viewModelScope.launch {

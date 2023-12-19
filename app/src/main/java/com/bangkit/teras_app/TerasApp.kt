@@ -68,7 +68,7 @@ fun TerasApp(
     ){ innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = Screen.Home.route,
+            startDestination = Screen.Register.route,
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(Screen.Home.route) {

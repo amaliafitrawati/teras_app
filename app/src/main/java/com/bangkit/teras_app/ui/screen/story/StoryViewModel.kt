@@ -3,22 +3,19 @@ package com.bangkit.teras_app.ui.screen.story
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bangkit.teras_app.data.RiceProductionRepository
+import com.bangkit.teras_app.data.TerasRepository
 import com.bangkit.teras_app.data.api.ApiConfig
 import com.bangkit.teras_app.data.response.ForumData
 import com.bangkit.teras_app.data.response.ForumResponse
-import com.bangkit.teras_app.model.Forum
 import com.bangkit.teras_app.ui.common.UiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.count
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class StoryViewModel(private val repository: RiceProductionRepository) : ViewModel() {
+class StoryViewModel(private val repository: TerasRepository) : ViewModel() {
     private val _uiState: MutableStateFlow<UiState<List<ForumData>>> = MutableStateFlow(UiState.Loading)
     val uiState: StateFlow<UiState<List<ForumData>>> get() = _uiState
 

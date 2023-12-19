@@ -29,6 +29,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -36,14 +37,14 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.bangkit.teras_app.R
 import com.bangkit.teras_app.ViewModelFactory
 import com.bangkit.teras_app.data.LockScreenOrientation
-import com.bangkit.teras_app.data.RiceProductionRepository
 import com.bangkit.teras_app.data.response.ForumData
+import com.bangkit.teras_app.di.Injection
 import com.bangkit.teras_app.ui.common.UiState
 
 @Composable
 fun BrowseStoryScreen(
     modifier : Modifier = Modifier,
-    viewModel : StoryViewModel = viewModel(factory = ViewModelFactory(RiceProductionRepository()))){
+    viewModel : StoryViewModel = viewModel(factory = ViewModelFactory(Injection.provideRepository(LocalContext.current)))){
     LockScreenOrientation(orientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
     viewModel.uiState.collectAsState(initial = UiState.Loading).value.let { uiState ->
         when(uiState){
