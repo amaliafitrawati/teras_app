@@ -27,3 +27,10 @@ val Typography = Typography(
         letterSpacing = 0.5.sp
     )
 )
+
+val plusjakartasansFontFamily = FontFamily(
+    Font(R.font.plusjakartasans_regular, FontWeight.Normal),
+    Font(R.font.plusjakartasans_medium, FontWeight.Medium),
+    Font(R.font.plusjakartasans_semibold, FontWeight.SemiBold),
+    Font(R.font.plusjakartasans_bold, FontWeight.Bold)
+)
