@@ -15,4 +15,6 @@
     <string name="like">Like</string>
     <string name="unlike">Unlike</string>
     <string name="detail">Detail</string>
+    <string name="surplus">Surplus</string>
+    <string name="defisit">Defisit</string>
 </resources>

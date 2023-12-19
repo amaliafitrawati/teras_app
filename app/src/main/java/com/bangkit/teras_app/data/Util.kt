@@ -37,3 +37,12 @@ fun topAppBarLabel(screenName: String): Int {
         else -> R.string.app_name
     }
 }
+
+@Composable
+fun checkMinus(value: Double?): Boolean {
+    return if (value != null) {
+        value < 0
+    }else{
+        false
+    }
+}

@@ -1,6 +1,8 @@
 package com.bangkit.teras_app.data.api
 
 import com.bangkit.teras_app.data.response.ForumResponse
+import com.bangkit.teras_app.data.response.PredictionData
+import com.bangkit.teras_app.data.response.PredictionResponse
 import com.bangkit.teras_app.data.response.RegisterData
 import com.bangkit.teras_app.data.response.RegisterResponse
 import retrofit2.Call
@@ -16,4 +18,7 @@ interface ApiService {
     fun registerUser(
         @Body request: RegisterData
     ): Call<RegisterResponse>
+
+    @GET("prediction")
+    fun getPrediction() : Call<PredictionResponse>
 }

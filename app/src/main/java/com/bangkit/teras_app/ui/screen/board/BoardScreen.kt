@@ -24,7 +24,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.bangkit.teras_app.R
 import com.bangkit.teras_app.ViewModelFactory
 import com.bangkit.teras_app.data.RiceProductionRepository
-import com.bangkit.teras_app.model.RiceProduction
+import com.bangkit.teras_app.data.checkMinus
+import com.bangkit.teras_app.data.response.PredictionData
 import com.bangkit.teras_app.ui.common.UiState
 
 @Composable
@@ -35,7 +36,7 @@ fun BoardScreen(
     viewModel.uiState.collectAsState(initial = UiState.Loading).value.let { uiState ->
         when(uiState){
             is UiState.Loading -> {
-                viewModel.filterByYear(query)
+                viewModel.getAllPrediction()
             }
             is UiState.Success -> {
                 Leaderboard(uiState.data)
@@ -47,7 +48,7 @@ fun BoardScreen(
 
 
 @Composable
-fun Leaderboard(riceProduction :  List<RiceProduction>) {
+fun Leaderboard(riceProduction :  List<PredictionData>) {
     LazyColumn {
         items(riceProduction) { entry ->
             BoardContent(entry)
@@ -57,7 +58,7 @@ fun Leaderboard(riceProduction :  List<RiceProduction>) {
 
 @Composable
 fun BoardContent(
-    rice: RiceProduction) {
+    rice: PredictionData) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -66,20 +67,20 @@ fun BoardContent(
         Column{
             val status : String
             val statusColor : Color
-            if(rice.isSurplus){
-                status = "Surplus"
-                statusColor = colorResource(R.color.greenBtn)
-            }else{
+            if(checkMinus(rice.prediction)){
                 status = "Defisit"
                 statusColor = Color.Red
+            }else{
+                status = "Surplus"
+                statusColor = colorResource(R.color.greenBtn)
             }
 
             Text(text = rice.province)
             Text(text = status, color = statusColor)
-            Text(text = "Total Produksi : ${rice.totalProduction}")
+            Text(text = "Total Produksi : ${rice.prediction}")
         }
         Row{
-            if(rice.ranking <= 3) {
+            if(rice.rank <= 3) {
                 Image(
                     painter =
                     painterResource(R.drawable.ic_rank),
@@ -89,8 +90,9 @@ fun BoardContent(
                         .padding(end = 5.dp)
                 )
             }
-            Text(text = "Peringkat ${rice.ranking}")
+            Text(text = "Peringkat ${rice.rank}")
         }
     }
+
 }
 
