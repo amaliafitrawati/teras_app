@@ -1,6 +1,8 @@
 package com.bangkit.teras_app.data.api
 
 import com.bangkit.teras_app.data.response.ForumResponse
+import com.bangkit.teras_app.data.response.LoginData
+import com.bangkit.teras_app.data.response.LoginResponse
 import com.bangkit.teras_app.data.response.PredictionData
 import com.bangkit.teras_app.data.response.PredictionResponse
 import com.bangkit.teras_app.data.response.RegisterData
@@ -19,6 +21,13 @@ interface ApiService {
         @Body request: RegisterData
     ): Call<RegisterResponse>
 
+    @POST("login")
+    fun loginUser(
+        @Body request: LoginData
+    ): Call<LoginResponse>
+
     @GET("prediction")
     fun getPrediction() : Call<PredictionResponse>
+
+
 }

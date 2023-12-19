@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.bangkit.teras_app.ui.screen.home.HomeScreen
+import com.bangkit.teras_app.ui.screen.login.LoginScreen
 import com.bangkit.teras_app.ui.screen.register.RegisterScreen
 import com.bangkit.teras_app.ui.theme.Teras_appTheme
 
@@ -23,7 +24,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    TerasApp()
+                    LoginScreen()
                 }
             }
         }

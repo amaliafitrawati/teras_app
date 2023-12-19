@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
@@ -27,12 +29,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.bangkit.teras_app.R
+import com.bangkit.teras_app.ViewModelFactory
+import com.bangkit.teras_app.data.RiceProductionRepository
 import com.bangkit.teras_app.ui.components.EmailTextField
 import com.bangkit.teras_app.ui.components.PasswordTextField
 
 @Composable
 fun LoginScreen(
+    viewModel : LoginViewModel = viewModel(factory = ViewModelFactory(RiceProductionRepository())),
     modifier: Modifier = Modifier
 ) {
     var email by remember { mutableStateOf("") }
@@ -41,7 +47,8 @@ fun LoginScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(35.dp)){
+            .padding(35.dp)
+            .verticalScroll(rememberScrollState())){
 
         Text(
             text = stringResource(R.string.login_header),
@@ -91,7 +98,9 @@ fun LoginScreen(
         ) {
             Button(
                 colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.primaryblue)),
-                onClick = { },
+                onClick = {
+                          viewModel.login(email,password)
+                },
                 modifier = Modifier
                     .height(41.dp)
                     .width(160.dp)
