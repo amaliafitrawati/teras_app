@@ -21,10 +21,10 @@ class RegisterViewModel(private val repository: RiceProductionRepository) : View
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    fun register(name: String, email: String, password: String) {
+    fun register(name: String, email: String, password: String, province : String) {
         _isLoading.value = true
-        Log.e("CEK DATA REGIST", name)
-        val data  = RegisterData(name, email, password, "Jakarta")
+        Log.e("TEST DATA NEH", province)
+        val data  = RegisterData(name, email, password, province)
         val client = ApiConfig.api.registerUser(data)
         client.enqueue(object : Callback<RegisterResponse> {
             override fun onResponse(call: Call<RegisterResponse>, response: Response<RegisterResponse>) {

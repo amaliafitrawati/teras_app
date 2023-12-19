@@ -46,3 +46,5 @@ fun checkMinus(value: Double?): Boolean {
         false
     }
 }
+
+

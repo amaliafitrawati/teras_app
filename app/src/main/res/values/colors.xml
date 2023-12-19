@@ -11,4 +11,7 @@
     <color name="lightGray">#959595</color>
     <color name="hitGray">#A4ADB4</color>
     <color name="greenBtn">#2bc48a</color>
+    <color name="primaryblue">#5F85E5</color>
+    <color name="secondprimary">#CEE4FE</color>
+    <color name="White">#FFFFFF</color>
 </resources>

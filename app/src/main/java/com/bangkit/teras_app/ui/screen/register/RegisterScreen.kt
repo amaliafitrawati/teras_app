@@ -1,12 +1,17 @@
 package com.bangkit.teras_app.ui.screen.register
 
 import android.content.pm.ActivityInfo
+import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
@@ -15,7 +20,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -29,11 +36,11 @@ import com.bangkit.teras_app.R
 import com.bangkit.teras_app.ViewModelFactory
 import com.bangkit.teras_app.data.LockScreenOrientation
 import com.bangkit.teras_app.data.RiceProductionRepository
+import com.bangkit.teras_app.model.listProvince
 import com.bangkit.teras_app.ui.components.EmailTextField
 import com.bangkit.teras_app.ui.components.NameTextField
 import com.bangkit.teras_app.ui.components.PasswordTextField
-import com.bangkit.teras_app.ui.components.UsernameTextField
-import com.bangkit.teras_app.ui.screen.board.BoardViewModel
+import com.bangkit.teras_app.ui.components.SampleSpinner
 
 @Composable
 fun RegisterScreen(
@@ -44,18 +51,18 @@ fun RegisterScreen(
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-
+    var province by remember { mutableStateOf<Pair<String, String>>(Pair("", "")) }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(35.dp)){
-
+            .padding(35.dp)
+            .verticalScroll(rememberScrollState())){
         Text(
             text = stringResource(R.string.register_header),
             fontWeight = FontWeight.SemiBold,
             fontSize = 18.sp,
-            modifier = Modifier.padding(bottom = 8.dp))
+            modifier = Modifier.padding(bottom = 5.dp))
 
         Text(
             text = stringResource(R.string.register_text),
@@ -67,7 +74,7 @@ fun RegisterScreen(
             painter = painterResource(R.drawable.img_register),
             contentDescription = "Image Register",
             modifier = Modifier
-                .size(320.dp)
+                .size(300.dp)
                 .fillMaxWidth())
 
         Text(
@@ -97,16 +104,42 @@ fun RegisterScreen(
 
         PasswordTextField(onChangedText = {password = it})
 
+
+        SampleSpinner(list = listProvince,
+            preselected = listProvince.first(),
+            onSelectionChanged = { selection ->
+                Log.e("SELECTION DATA", selection.first )
+                Log.e("SELECTION SECOND", selection.second )
+                province = selection
+            } )
+
         Button(
                 colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.btnColor)),
                 onClick = {
-                    viewModel.register(name, email, password)
-                }) {
+                    viewModel.register(name, email, password, province.first)
+                },
+                modifier = Modifier.padding(bottom = 4.dp, top = 12.dp)) {
             Text(
                 text = stringResource(R.string.register_btn),
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .fillMaxWidth()
+            )
+        }
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically){
+            Text(
+                text = "Already Have account?",
+                textAlign = TextAlign.Center,
+            )
+            Text(
+                text = "Login here",
+                color = Color.Blue,
+                textAlign = TextAlign.Center,
+                modifier = Modifier.padding(start = 4.dp)
             )
         }
     }

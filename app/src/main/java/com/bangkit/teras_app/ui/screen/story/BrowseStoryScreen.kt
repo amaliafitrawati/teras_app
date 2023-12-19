@@ -1,6 +1,7 @@
 package com.bangkit.teras_app.ui.screen.story
 
 
+import android.content.pm.ActivityInfo
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -34,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.bangkit.teras_app.R
 import com.bangkit.teras_app.ViewModelFactory
+import com.bangkit.teras_app.data.LockScreenOrientation
 import com.bangkit.teras_app.data.RiceProductionRepository
 import com.bangkit.teras_app.data.response.ForumData
 import com.bangkit.teras_app.ui.common.UiState
@@ -42,6 +44,7 @@ import com.bangkit.teras_app.ui.common.UiState
 fun BrowseStoryScreen(
     modifier : Modifier = Modifier,
     viewModel : StoryViewModel = viewModel(factory = ViewModelFactory(RiceProductionRepository()))){
+    LockScreenOrientation(orientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
     viewModel.uiState.collectAsState(initial = UiState.Loading).value.let { uiState ->
         when(uiState){
             is UiState.Loading -> {

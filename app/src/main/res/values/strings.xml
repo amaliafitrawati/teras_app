@@ -17,4 +17,7 @@
     <string name="detail">Detail</string>
     <string name="surplus">Surplus</string>
     <string name="defisit">Defisit</string>
+    <string name="login_header">Selamat Datang di Teras</string>
+    <string name="desk_apk">Aplikasi Ketahanan Pangan untuk Indonesia</string>
+    <string name="login_button">Login</string>
 </resources>

@@ -51,7 +51,9 @@ fun BoardScreen(
 fun Leaderboard(riceProduction :  List<PredictionData>) {
     LazyColumn {
         items(riceProduction) { entry ->
-            BoardContent(entry)
+            if(entry.rank > 0){
+                BoardContent(entry)
+            }
         }
     }
 }
