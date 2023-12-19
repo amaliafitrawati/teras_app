@@ -69,6 +69,7 @@ dependencies{
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
     implementation("androidx.lifecycle:lifecycle-livedata:2.3.1")
+    implementation("androidx.compose.runtime:runtime-livedata:1.5.4")
     implementation("androidx.room:room-runtime:2.4.3")
     implementation("androidx.room:room-ktx:2.4.3")
     implementation("androidx.compose.material:material-icons-extended:1.5.4")

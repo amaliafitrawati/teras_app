@@ -1,5 +1,6 @@
 package com.bangkit.teras_app.ui.screen.login
 
+import android.content.pm.ActivityInfo
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,6 +17,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -32,7 +34,9 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.bangkit.teras_app.R
 import com.bangkit.teras_app.ViewModelFactory
+import com.bangkit.teras_app.data.LockScreenOrientation
 import com.bangkit.teras_app.data.RiceProductionRepository
+import com.bangkit.teras_app.ui.components.CircularLoading
 import com.bangkit.teras_app.ui.components.EmailTextField
 import com.bangkit.teras_app.ui.components.PasswordTextField
 
@@ -41,15 +45,21 @@ fun LoginScreen(
     viewModel : LoginViewModel = viewModel(factory = ViewModelFactory(RiceProductionRepository())),
     modifier: Modifier = Modifier
 ) {
+    LockScreenOrientation(orientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+
+    val isLoading by viewModel.isLoading.observeAsState(initial = false)
+    val loginResponse by viewModel.loginResponse.observeAsState(initial = null)
+
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(35.dp)
             .verticalScroll(rememberScrollState())){
-
+        CircularLoading(isLoading)
         Text(
             text = stringResource(R.string.login_header),
             fontWeight = FontWeight.SemiBold,
@@ -99,7 +109,7 @@ fun LoginScreen(
             Button(
                 colors = ButtonDefaults.buttonColors(containerColor = colorResource(R.color.primaryblue)),
                 onClick = {
-                          viewModel.login(email,password)
+                          viewModel.loginUser(email,password)
                 },
                 modifier = Modifier
                     .height(41.dp)

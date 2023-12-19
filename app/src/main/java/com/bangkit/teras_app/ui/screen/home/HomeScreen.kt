@@ -2,6 +2,7 @@
 
 package com.bangkit.teras_app.ui.screen.home
 
+import android.content.pm.ActivityInfo
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -45,6 +46,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.bangkit.teras_app.R
+import com.bangkit.teras_app.data.LockScreenOrientation
 import com.bangkit.teras_app.ui.theme.plusjakartasansFontFamily
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -53,6 +55,8 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun HomeScreen(){
+    LockScreenOrientation(orientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
+
     Box(modifier = Modifier
         .fillMaxSize()
     ){
