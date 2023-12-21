@@ -16,12 +16,12 @@ module.exports = {
                 console.log(err);
                 return res.status(500).json({
                     success:0,
-                    message: "Database connection error"
+                    message: "Email address is already registered"
                 });
             }
             return res.status(200).json({
                 success:1,
-                data:results,
+                data:[],
             });
         });
     },
@@ -82,13 +82,17 @@ module.exports = {
                     expiresIn :"1h"
                 });
                 return res.status(200).json({
-                    sucess:1,
+                    success:1,
                     message:"Login Successfully",
-                    token:jsonwebtoken
+                    token:jsonwebtoken,
+                    id:results.id,
+                    name:results.name,
+                    email:results.email,
+                    address:results.address
                 });
             }else{
                 return res.json({
-                    sucess:0,
+                    success:0,
                     message:"Invalid email or password"
                 });
             }

@@ -3,7 +3,7 @@ const axios = require("axios");
 
 module.exports = {
     readPrediction: (req,res)=>{
-        const flaskUrl = 'https://teras-model-hqlboaqepq-et.a.run.app/prediction';
+        const flaskUrl = 'https://teras-model-l3azxq25lq-et.a.run.app/prediction';
 
         axios.get(flaskUrl)
             .then(response =>{
