@@ -9,18 +9,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 class ApiConfig {
-    //private const val BASE_URL = "https://teras-backend-hqlboaqepq-et.a.run.app"
-
-//    private val retrofit: Retrofit by lazy {
-//        Retrofit.Builder()
-//            .baseUrl(BASE_URL)
-//            .addConverterFactory(GsonConverterFactory.create())
-//            .build()
-//    }
-//
-//    val apiService : ApiService by lazy {
-//        retrofit.create(ApiService::class.java)
-//    }
 
     companion object{
         private const val BASE_URL = BuildConfig.BASE_URL
@@ -33,9 +21,9 @@ class ApiConfig {
                 }
             val client = OkHttpClient.Builder()
                 .addInterceptor(loggingInterceptor)
-                .connectTimeout(60, TimeUnit.SECONDS)
-                .readTimeout(60, TimeUnit.SECONDS)
-                .writeTimeout(60, TimeUnit.SECONDS)
+                .connectTimeout(500, TimeUnit.SECONDS)
+                .readTimeout(500, TimeUnit.SECONDS)
+                .writeTimeout(500, TimeUnit.SECONDS)
                 .build()
             val retrofit = Retrofit.Builder()
                 .baseUrl(BASE_URL)
@@ -46,25 +34,4 @@ class ApiConfig {
         }
     }
 
-//    companion object{
-//        const val BASE_URL = BuildConfig.BASE_URL
-//
-//        fun getApiService(): ApiService {
-//            val loggingInterceptor =
-//                if (BuildConfig.DEBUG) {
-//                    HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
-//                } else {
-//                    HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.NONE)
-//                }
-//            val client = OkHttpClient.Builder()
-//                .addInterceptor(loggingInterceptor)
-//                .build()
-//            val retrofit = Retrofit.Builder()
-//                .baseUrl(BASE_URL)
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .client(client)
-//                .build()
-//            return retrofit.create(ApiService::class.java)
-//        }
-//    }
 }

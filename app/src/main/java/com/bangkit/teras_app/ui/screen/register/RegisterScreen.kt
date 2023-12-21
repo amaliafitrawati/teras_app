@@ -37,7 +37,6 @@ import androidx.navigation.NavHostController
 import com.bangkit.teras_app.R
 import com.bangkit.teras_app.ViewModelFactory
 import com.bangkit.teras_app.data.LockScreenOrientation
-import com.bangkit.teras_app.data.TerasRepository
 import com.bangkit.teras_app.di.Injection
 import com.bangkit.teras_app.model.listProvince
 import com.bangkit.teras_app.ui.components.EmailTextField
@@ -133,10 +132,10 @@ fun RegisterScreen(
 
         Column(
             modifier = Modifier.fillMaxWidth(),
-            verticalArrangement = Arrangement.Center, // Align vertically at center
+            verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally ){
             Text(
-                text = "Already Have account?",
+                text = stringResource(R.string.have_account),
                 textAlign = TextAlign.Center,
             )
             ClickableText(

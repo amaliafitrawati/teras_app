@@ -1,5 +1,3 @@
-@file:Suppress("UNUSED_PARAMETER")
-
 package com.bangkit.teras_app.ui.screen.board
 
 import android.content.pm.ActivityInfo
@@ -32,6 +30,7 @@ import com.bangkit.teras_app.data.checkMinus
 import com.bangkit.teras_app.data.response.PredictionData
 import com.bangkit.teras_app.di.Injection
 import com.bangkit.teras_app.ui.common.UiState
+import com.bangkit.teras_app.ui.components.LoadingComponent
 import com.bangkit.teras_app.ui.components.loadingAnimation
 
 @Composable
@@ -48,7 +47,7 @@ fun BoardScreen(
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    loadingAnimation(true)
+                    LoadingComponent(true)
                 }
                 viewModel.getAllPrediction()
             }
@@ -56,6 +55,7 @@ fun BoardScreen(
                 Leaderboard(uiState.data)
             }
             is UiState.Error -> {}
+            else -> {}
         }
     }
 }

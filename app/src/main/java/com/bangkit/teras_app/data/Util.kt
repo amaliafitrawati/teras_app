@@ -50,7 +50,7 @@ fun checkMinus(value: Double?): Boolean {
 }
 
 
-private fun calculateDistance(startLatLng: LatLng, endLatLng: LatLng): Float {
+fun calculateDistance(startLatLng: LatLng, endLatLng: LatLng): Float {
     val results = FloatArray(1)
     Location.distanceBetween(
         startLatLng.latitude,
@@ -60,4 +60,13 @@ private fun calculateDistance(startLatLng: LatLng, endLatLng: LatLng): Float {
         results
     )
     return results[0]
+}
+
+fun splitText(text: String): String {
+    val words = text.split(" ")
+    val result = StringBuilder()
+    words.forEach { word ->
+        result.append("$word\n")
+    }
+    return result.toString()
 }

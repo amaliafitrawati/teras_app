@@ -28,27 +28,27 @@ fun BottomBar(
             NavigationItem(
                 title = stringResource(R.string.menu_home),
                 icon = ImageVector.vectorResource(R.drawable.ic_home),
-                screen = Screen.Home
+                screen = Screen.App.Home
             ),
             NavigationItem(
                 title = stringResource(R.string.menu_board),
                 icon = ImageVector.vectorResource(R.drawable.ic_board),
-                screen = Screen.Board
+                screen = Screen.App.Board
             ),
-            NavigationItem(
-                title = stringResource(R.string.menu_add_story),
-                icon = ImageVector.vectorResource(R.drawable.ic_circle_add),
-                screen = Screen.AddStory
-            ),
-            NavigationItem(
-                title = stringResource(R.string.menu_browse_story),
-                icon = ImageVector.vectorResource(R.drawable.ic_browse),
-                screen = Screen.BrowseStory
-            ),
+//            NavigationItem(
+//                title = stringResource(R.string.menu_add_story),
+//                icon = ImageVector.vectorResource(R.drawable.ic_circle_add),
+//                screen = Screen.App.AddStory
+//            ),
+//            NavigationItem(
+//                title = stringResource(R.string.menu_browse_story),
+//                icon = ImageVector.vectorResource(R.drawable.ic_browse),
+//                screen = Screen.App.BrowseStory
+//            ),
             NavigationItem(
                 title = stringResource(R.string.menu_account),
                 icon = ImageVector.vectorResource(R.drawable.ic_account),
-                screen = Screen.Account
+                screen = Screen.App.Account
             ),
         )
         navigationItems.map { item ->

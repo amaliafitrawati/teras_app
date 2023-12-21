@@ -2,11 +2,11 @@
 
 package com.bangkit.teras_app.ui.screen.home
 
+import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.collectIsDraggedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -23,6 +23,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
@@ -31,9 +32,11 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -44,6 +47,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -52,9 +56,12 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.bangkit.teras_app.R
 import com.bangkit.teras_app.ViewModelFactory
 import com.bangkit.teras_app.data.LockScreenOrientation
-import com.bangkit.teras_app.data.pref.UserModel
+import com.bangkit.teras_app.data.response.PredictionData
+import com.bangkit.teras_app.data.splitText
 import com.bangkit.teras_app.di.Injection
-import com.bangkit.teras_app.ui.screen.login.LoginViewModel
+import com.bangkit.teras_app.ui.common.UiState
+import com.bangkit.teras_app.ui.components.LoadingComponent
+import com.bangkit.teras_app.ui.components.PopupDialog
 import com.bangkit.teras_app.ui.theme.plusjakartasansFontFamily
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -63,23 +70,78 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun HomeScreen(
+    modifier: Modifier = Modifier.background(Color.White),
     viewModel : HomeViewModel = viewModel(factory = ViewModelFactory(Injection.provideRepository(LocalContext.current)))){
     LockScreenOrientation(orientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
 
+    var isLoading by remember { mutableStateOf(false) }
+    var name by remember { mutableStateOf("Amalia") }
+    var address by remember { mutableStateOf("Jakarta") }
+    var isShow by remember { mutableStateOf(false) }
+
+    var nearCity by remember { mutableStateOf<List<PredictionData>>(emptyList())}
+    var listTopPredict by remember { mutableStateOf(listOf<String>()) }
+
+    val uiState by viewModel.uiState.collectAsState()
+
     Box(modifier = Modifier
         .fillMaxSize()){
-        LaunchedEffect(viewModel.getSession()) {
-            viewModel.getSession().collect { newUser ->
-
+        LaunchedEffect(viewModel.getSession()){
+            viewModel.getSession().collect {
+                name = it.user.name
+                address = it.user.address
             }
         }
 
-        Column {
-            GreetingSection()
-            AutoSlidingImage()
-            TopThree()
-            SurplusDart()
+        LaunchedEffect(Unit) {
+            viewModel.getNearbyCities(106.845172, -6.211544)
+        }
 
+        val nearbyCityState by viewModel.nearbyCityState.collectAsState()
+
+        when (val state = nearbyCityState) {
+            is UiState.Loading -> {
+                isLoading = true
+            }
+            is UiState.Success -> {
+                isLoading = false
+                nearCity = state.data
+            }
+            is UiState.Error -> {
+                isShow = true
+                PopupDialog(isShow = true, onDismiss = { isShow = false }, message = "Connection Timeout"  )
+            }
+            else -> {}
+        }
+
+        LaunchedEffect(uiState){
+            isLoading = false
+            when(uiState){
+                is UiState.Loading -> {
+                    isLoading = true
+                    viewModel.getTopThreePrediction()
+                }is UiState.Success -> {
+                    val data = (uiState as UiState.Success<List<PredictionData>>).data
+                    if (data.size >= 4) {
+                        listTopPredict = listOf(
+                            data[1].province,
+                            data[2].province,
+                            data[3].province
+                        )
+                    }
+                }is UiState.Error ->{
+                    isShow = true
+                }
+                else -> {}
+                }
+        }
+
+
+        Column(modifier = Modifier.background(Color.White)){
+            GreetingSection(name, address)
+            AutoSlidingImage()
+            TopThree(listTopPredict)
+            ScreenNearbyData(isLoading, nearCity)
         }
     }
 }
@@ -87,7 +149,8 @@ fun HomeScreen(
 
 @Composable
 fun GreetingSection(
-    name: String = "George"
+    name: String,
+    address : String
 ){
     Row (
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -111,7 +174,7 @@ fun GreetingSection(
                     .padding(start = 21.dp, top = 21.dp)
             )
             Text(
-                text = "$name",
+                text = name,
                 style = TextStyle(
                     fontFamily = plusjakartasansFontFamily,
                     fontWeight = FontWeight.Bold,
@@ -131,7 +194,7 @@ fun GreetingSection(
                         .size(24.dp)
                 )
                 Text(
-                    text = "Malang",
+                    text = address,
                     style = TextStyle(
                         fontFamily = plusjakartasansFontFamily,
                         fontWeight = FontWeight.Normal,
@@ -164,14 +227,13 @@ fun IndicatorDot(
     modifier: Modifier = Modifier,
     size: Dp,
     color: Color
-) {
+){
     Box(
         modifier = modifier
             .size(size)
             .clip(CircleShape)
             .background(color)
     )
-
 }
 
 @Composable
@@ -182,7 +244,7 @@ fun DotsIndicator(
     selectedColor: Color = Color(0xFF5F85E5),
     unSelectedColor: Color = Color(0xFFCEE4FE),
     dotSize: Dp
-) {
+){
     LazyRow(
         modifier = modifier
             .wrapContentWidth()
@@ -249,6 +311,7 @@ fun AutoSlidingCarousel(
     }
 }
 
+@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun AutoSlidingImage() {
     val drawableIds = listOf(
@@ -285,14 +348,15 @@ fun AutoSlidingImage() {
 }
 
 
-
 @Composable
-fun TopThree() {
+fun TopThree(listTopPredict: List<String>) {
+
     val drawableIds = listOf(
         R.drawable.medal1,
         R.drawable.medal2,
         R.drawable.medal3
     )
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -315,24 +379,27 @@ fun TopThree() {
                 .padding(start = 42.dp, top = 40.dp)
         ) {
             items(3) { index ->
-                Box(
-                    modifier = Modifier
-                        .width(80.dp)
-                        .height(80.dp)
-                        .padding(8.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                        .clickable {
-
-                        }
-                        .background(color = Color(0xFFCEE4FE))
-                ) {
-                    Image(
-                        painter = painterResource(id = drawableIds[index]),
-                        contentDescription = null,
+                Column(horizontalAlignment = Alignment.CenterHorizontally){
+                    Box(
                         modifier = Modifier
-                            .fillMaxSize()
+                            .width(80.dp)
+                            .height(80.dp)
                             .padding(8.dp)
-                    )
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(color = Color(0xFFCEE4FE))
+                    ) {
+                        Image(
+                            painter = painterResource(id = drawableIds[index]),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(8.dp)
+                        )
+                    }
+                    Text(
+                        text = if(!listTopPredict.isNullOrEmpty()) splitText(listTopPredict[index])  else "",
+                        textAlign = TextAlign.Center,
+                        softWrap = true)
                 }
             }
         }
@@ -340,15 +407,33 @@ fun TopThree() {
 }
 
 @Composable
-fun SurplusDart() {
-    val drawableIds = listOf(
-        R.drawable.beraskantong,
-        R.drawable.beraskantong,
-        R.drawable.beraskantong
+fun ScreenNearbyData(
+    isLoading : Boolean = false,
+    riceProduction :  List<PredictionData>) {
+    LoadingComponent(isLoading = isLoading)
+    Text(
+        text = "Kota Surplus Terdekat",
+        style = TextStyle(
+            fontFamily = plusjakartasansFontFamily,
+            fontWeight = FontWeight.Bold,
+            fontSize = 18.sp,
+            color = Color.Black
+        ),
+        modifier = Modifier
+            .padding(start = 31.dp)
     )
-
     LazyColumn {
-        items(3) { index ->
+        items(riceProduction) { entry ->
+            SurplusDart(entry)
+        }
+    }
+}
+
+@SuppressLint("SuspiciousIndentation")
+@Composable
+fun SurplusDart(rice: PredictionData) {
+    val drawableIds = listOf(
+        R.drawable.beraskantong)
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -368,7 +453,7 @@ fun SurplusDart() {
                             .clip(RoundedCornerShape(topStart = 10.dp, bottomStart = 10.dp))
                     ) {
                         Image(
-                            painter = painterResource(id = drawableIds[index]),
+                            painter = painterResource(id = drawableIds[0]),
                             contentDescription = null,
                             modifier = Modifier
                                 .fillMaxSize()
@@ -380,7 +465,7 @@ fun SurplusDart() {
                             .padding(start = 110.dp, top = 15.dp, end = 8.dp, bottom = 20.dp)
                     ) {
                         Text(
-                            text = "Jawa Timur",
+                            text = rice.province,
                             style = TextStyle(
                                 fontFamily = plusjakartasansFontFamily,
                                 fontWeight = FontWeight.SemiBold,
@@ -389,7 +474,7 @@ fun SurplusDart() {
                             )
                         )
                         Text(
-                            text = "Beras",
+                            text = "${rice.prediction}",
                             style = TextStyle(
                                 fontFamily = plusjakartasansFontFamily,
                                 fontWeight = FontWeight.SemiBold,
@@ -401,8 +486,7 @@ fun SurplusDart() {
                     }
                 }
             }
-        }
-    }
+
 }
 
 @Preview(showBackground = true)

@@ -43,7 +43,7 @@ import com.bangkit.teras_app.ui.common.UiState
 
 @Composable
 fun BrowseStoryScreen(
-    modifier : Modifier = Modifier,
+    modifier: Modifier = Modifier.background(Color.White),
     viewModel : StoryViewModel = viewModel(factory = ViewModelFactory(Injection.provideRepository(LocalContext.current)))){
     LockScreenOrientation(orientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
     viewModel.uiState.collectAsState(initial = UiState.Loading).value.let { uiState ->
@@ -57,6 +57,7 @@ fun BrowseStoryScreen(
                )
             }
             is UiState.Error -> {}
+            else ->{}
         }
     }
 }

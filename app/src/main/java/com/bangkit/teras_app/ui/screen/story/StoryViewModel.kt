@@ -19,16 +19,6 @@ class StoryViewModel(private val repository: TerasRepository) : ViewModel() {
     private val _uiState: MutableStateFlow<UiState<List<ForumData>>> = MutableStateFlow(UiState.Loading)
     val uiState: StateFlow<UiState<List<ForumData>>> get() = _uiState
 
-//    fun getAllStory() = viewModelScope.launch {
-//        Log.e("TEST DATA",repository.getForumApi().count().toString())
-//        repository.getForumApi()
-//            .catch{
-//                _uiState.value = UiState.Error(it.message.toString())
-//            }.collect{
-//                _uiState.value = UiState.Success(it)
-//            }
-//    }
-
      fun getAllStory(){
         viewModelScope.launch {
             val call : Call<ForumResponse> = ApiConfig.api.getForum()
@@ -40,7 +30,6 @@ class StoryViewModel(private val repository: TerasRepository) : ViewModel() {
                     if(response.isSuccessful){
                         val responseData: List<ForumData>? = response.body()?.data
                         if(responseData != null){
-                           Log.e("SUCCESS DATA", responseData.toString())
                             _uiState.value = UiState.Success(responseData)
                         }
                     }

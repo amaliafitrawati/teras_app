@@ -19,7 +19,7 @@ import androidx.compose.ui.draw.scale
 import kotlinx.coroutines.delay
 
 @Composable
-fun CircularLoading(isLoading: Boolean) {
+fun LoadingComponent(isLoading: Boolean) {
     if (isLoading) {
         Box(modifier = Modifier.run { fillMaxSize() }) {
             CircularProgressIndicator(

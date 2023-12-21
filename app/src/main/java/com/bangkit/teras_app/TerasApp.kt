@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -34,7 +35,6 @@ fun currentRoute(navController: NavHostController): String? {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     return navBackStackEntry?.destination?.route
 }
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -68,23 +68,29 @@ fun TerasApp(
     ){ innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = Screen.Register.route,
+            startDestination = Screen.Login.route,
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable(Screen.Home.route) {
-                HomeScreen()
-            }
-            composable(Screen.Board.route) {
-                BoardScreen()
-            }
-            composable(Screen.AddStory.route) {
-                AddStoryScreen()
-            }
-            composable(Screen.BrowseStory.route) {
-                BrowseStoryScreen()
-            }
-            composable(Screen.Account.route) {
-                AccountScreen(navController = navController)
+            navigation(
+                startDestination = Screen.App.Home.route,
+                route = Screen.App.route
+            ) {
+                composable(Screen.App.Home.route) {
+                    HomeScreen()
+                }
+                composable(Screen.App.Board.route) {
+                    BoardScreen()
+                }
+                composable(Screen.App.AddStory.route) {
+                    AddStoryScreen()
+                }
+                composable(Screen.App.BrowseStory.route) {
+                    BrowseStoryScreen()
+                }
+                composable(Screen.App.Account.route) {
+                    AccountScreen(navController = navController)
+                }
+
             }
             composable(Screen.Login.route) {
                 LoginScreen(navController = navController)

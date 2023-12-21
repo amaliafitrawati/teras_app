@@ -24,7 +24,7 @@ class TerasRepository private constructor(private val userPreference: UserPrefer
         @Volatile
         private var instance: TerasRepository? = null
 
-        fun getInstance(userPreference: UserPreference,): TerasRepository =
+        fun getInstance(userPreference: UserPreference): TerasRepository =
             instance ?: synchronized(this) {
                 TerasRepository(userPreference).apply {
                     instance = this

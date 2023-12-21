@@ -1,10 +1,12 @@
 package com.bangkit.teras_app
 
+import android.accounts.Account
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.bangkit.teras_app.data.TerasRepository
 import com.bangkit.teras_app.di.Injection
+import com.bangkit.teras_app.ui.screen.account.AccountViewModel
 import com.bangkit.teras_app.ui.screen.board.BoardViewModel
 import com.bangkit.teras_app.ui.screen.home.HomeViewModel
 import com.bangkit.teras_app.ui.screen.login.LoginViewModel
@@ -23,10 +25,12 @@ class ViewModelFactory(
             return BoardViewModel(riceRepository) as T
         }else if (modelClass.isAssignableFrom(StoryViewModel::class.java)) {
             return StoryViewModel(riceRepository) as T
-        } else if (modelClass.isAssignableFrom(RegisterViewModel::class.java)) {
+        }else if (modelClass.isAssignableFrom(RegisterViewModel::class.java)) {
             return RegisterViewModel(riceRepository) as T
-        } else if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
+        }else if (modelClass.isAssignableFrom(LoginViewModel::class.java)) {
             return LoginViewModel(riceRepository) as T
+        }else if (modelClass.isAssignableFrom(AccountViewModel::class.java)) {
+            return AccountViewModel(riceRepository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
     }

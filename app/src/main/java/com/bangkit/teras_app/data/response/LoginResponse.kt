@@ -3,7 +3,7 @@ package com.bangkit.teras_app.data.response
 import com.google.gson.annotations.SerializedName
 
 data class LoginResponse(
-    @SerializedName("sucess")
+    @SerializedName("success")
     val success : Int,
     @SerializedName("message")
     val message : String,

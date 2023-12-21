@@ -8,18 +8,21 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bangkit.teras_app.data.TerasRepository
 import com.bangkit.teras_app.data.api.ApiConfig
+import com.bangkit.teras_app.data.pref.User
 import com.bangkit.teras_app.data.pref.UserModel
 import com.bangkit.teras_app.data.response.LoginData
 import com.bangkit.teras_app.data.response.LoginResponse
-import kotlinx.coroutines.flow.Flow
+import com.bangkit.teras_app.ui.common.UiState
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class LoginViewModel(private val repository: TerasRepository) : ViewModel() {
-    private val _loginResponse = MutableLiveData<LoginResponse>()
-    val loginResponse: LiveData<LoginResponse> = _loginResponse
+    private val _uiState: MutableStateFlow<UiState<LoginResponse>> = MutableStateFlow(UiState.Idle)
+    val uiState: StateFlow<UiState<LoginResponse>> get() = _uiState
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> get() = _isLoading
@@ -36,7 +39,18 @@ class LoginViewModel(private val repository: TerasRepository) : ViewModel() {
                     } catch (e: Exception) {
                         Log.e("Error","Terjadi Kesalahan")
                     } finally {
-                        _loginResponse.value = response.body()
+                        val responseBody = response.body()
+
+                        if(responseBody?.success == 1){
+                            _uiState.value = UiState.Success(responseBody)
+                            val userModel = UserModel(User(responseBody.email, responseBody.address, responseBody.name),
+                                responseBody.email, true)
+                            saveSession(userModel)
+                            Log.e("CEK MODEL", userModel.user.email)
+                        }else{
+                            _uiState.value = UiState.Error("Email atau password tidak valid")
+                        }
+
                         _isLoading.value = false
                     }
                 }
@@ -56,11 +70,5 @@ class LoginViewModel(private val repository: TerasRepository) : ViewModel() {
             repository.saveSession(user)
         }
     }
-
-
-    fun getSession(): Flow<UserModel> {
-        return repository.getSession()
-    }
-
 
 }
