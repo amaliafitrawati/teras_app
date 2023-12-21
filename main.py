@@ -1,3 +1,5 @@
+import os
+
 import pandas as pd
 import numpy as np
 import math
@@ -293,6 +295,13 @@ def index():
             for rank, data in enumerate(sorted_predictions)
         ]
 
-        return jsonify(ranked_predictions)
+        endpoint = {
+            "success":1,
+            "data":ranked_predictions,
+            "message" :"OK",
+        }
+
+        return jsonify(endpoint)
 if __name__ == "__main__":
-  app.run(debug=True)
+    port = int(os.environ.get('PORT', 8080))
+    app.run(host="0.0.0.0", port=port)

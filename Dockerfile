@@ -1,17 +1,15 @@
 # Menggunakan base image Python
-FROM python:3.8-slim
+FROM python:3.10-slim
 
-# Set working directory di dalam container
-WORKDIR /app
+ENV PYTHONUNBUFFERED True
 
-# Menyalin file requirements.txt ke dalam container
-COPY requirements.txt .
+# copy the local code to the container image
+ENV APP_HOME /app
+WORKDIR $APP_HOME
+COPY  . .
 
-# Menginstal dependensi aplikasi
-RUN pip install --no-cache-dir -r requirements.txt
+# install all required packages specified in requirements.txt
+RUN pip install -r requirements.txt
 
-# Menyalin seluruh konten proyek ke dalam container
-COPY . .
-
-# Menjalankan aplikasi Flask pada port 5000
-CMD ["python", "app.py"]
+# run web service on container using gunicorn
+CMD ["python", "main.py"]
