@@ -7,12 +7,12 @@ const pathKey = path.resolve('./serviceaccountkey.json')
 
 // TODO: Sesuaikan konfigurasi Storage
 const gcs = new Storage({
-    projectId: 'teras-ch2-ps415',
+    projectId: '',
     keyFilename: pathKey
 })
 
 // TODO: Tambahkan nama bucket yang digunakan
-const bucketName = 'teras_forum_images1'
+const bucketName = ''
 const bucket = gcs.bucket(bucketName)
 
 function getPublicUrl(filename) {
