@@ -3,6 +3,7 @@ package com.bangkit.teras_app.ui.screen.login
 import android.content.pm.ActivityInfo
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -53,7 +55,6 @@ import com.bangkit.teras_app.ui.navigation.Screen
 @Composable
 fun LoginScreen(
     navController: NavHostController,
-    modifier: Modifier = Modifier,
     viewModel : LoginViewModel = viewModel(factory = ViewModelFactory(Injection.provideRepository(LocalContext.current)))){
     LockScreenOrientation(orientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
 
@@ -62,9 +63,9 @@ fun LoginScreen(
     var isLoading by remember { mutableStateOf(false) }
     var isShow by remember { mutableStateOf(false) }
     var alertMessage by remember { mutableStateOf("") }
+    var status by remember { mutableStateOf("") }
 
     val uiState by viewModel.uiState.collectAsState()
-
 
     Column(
         modifier = Modifier
@@ -72,7 +73,7 @@ fun LoginScreen(
             .padding(35.dp)
             .verticalScroll(rememberScrollState())){
         LoadingComponent(isLoading)
-        PopupDialog(isShow = isShow, onDismiss = { isShow = false }, message = alertMessage)
+        PopupDialog(status = status, isShow = isShow, onDismiss = { isShow = false }, message = alertMessage)
         Text(
             text = stringResource(R.string.login_header),
             fontWeight = FontWeight.SemiBold,
@@ -95,6 +96,7 @@ fun LoginScreen(
                 }is UiState.Success -> {
                     navController.navigate(Screen.App.route)
                 }is UiState.Error ->{
+                    status = "Gagal"
                     isShow = true
                     alertMessage = (uiState as UiState.Error).errorMessage
                 }
@@ -159,7 +161,7 @@ fun LoginScreen(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally ){
             Text(
-                text = stringResource(R.string.have_account),
+                text = stringResource(R.string.dont_have_account),
                 textAlign = TextAlign.Center,
             )
             ClickableText(

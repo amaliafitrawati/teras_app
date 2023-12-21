@@ -25,4 +25,6 @@
     <string name="dont_have_account">Belum punya akun?</string>
     <string name="register_here">Daftar di sini</string>
     <string name="have_account">Sudah punya akun?</string>
+    <string name="success">Berhasil</string>
+    <string name="failed">Gagal</string>
 </resources>

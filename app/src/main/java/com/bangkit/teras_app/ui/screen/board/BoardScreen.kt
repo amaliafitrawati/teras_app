@@ -2,6 +2,7 @@ package com.bangkit.teras_app.ui.screen.board
 
 import android.content.pm.ActivityInfo
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -45,7 +46,7 @@ fun BoardScreen(
                 Column(
                     modifier = Modifier.fillMaxSize(),
                     verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
+                    horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     LoadingComponent(true)
                 }
@@ -63,10 +64,13 @@ fun BoardScreen(
 
 @Composable
 fun Leaderboard(riceProduction :  List<PredictionData>) {
-    LazyColumn {
-        items(riceProduction) { entry ->
-            if(entry.rank > 0){
-                BoardContent(entry)
+    Column(modifier = Modifier
+        .fillMaxSize().background(Color.White)){
+        LazyColumn(){
+            items(riceProduction) { entry ->
+                if(entry.rank > 0){
+                    BoardContent(entry)
+                }
             }
         }
     }
@@ -78,7 +82,8 @@ fun BoardContent(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(22.dp),
+            .padding(22.dp)
+            .background(Color.White),
         horizontalArrangement = Arrangement.SpaceBetween){
         Column{
             val status : String

@@ -26,7 +26,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun SampleSpinner(
+fun ProvinceSpinner(
     list: List<Pair<String, String>>,
     preselected: Pair<String, String>,
     onSelectionChanged: (selection: Pair<String, String>) -> Unit
@@ -40,7 +40,7 @@ fun SampleSpinner(
             OutlinedTextField(
                 value = (selected.second),
                 onValueChange = { },
-                label = { Text(text = "Province") },
+                label = { Text(text = "Provinsi") },
                 modifier = Modifier.fillMaxWidth(),
                 trailingIcon = { Icon(Icons.Outlined.ArrowDropDown, null) },
                 readOnly = true

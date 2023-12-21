@@ -1,13 +1,16 @@
 package com.bangkit.teras_app.data.response
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
 data class RegisterResponse(
     @SerializedName("success")
-    val success : Integer,
-    @SerializedName("data")
-    val data : List<RegisterReturnData>
+    val success : Int,
+    @SerializedName("message")
+    val message: String
 )
+
 
 data class RegisterData(
     @field:SerializedName("name")
@@ -19,7 +22,7 @@ data class RegisterData(
     @field:SerializedName("address")
     val address: String,)
 
-
+@Parcelize
 data class RegisterReturnData(
     @field:SerializedName("fieldCount")
     val fieldCount: String,
@@ -36,4 +39,4 @@ data class RegisterReturnData(
     @field:SerializedName("protocol41")
     val protocol41: String,
     @field:SerializedName("changedRows")
-    val changedRows: String)
+    val changedRows: String): Parcelable

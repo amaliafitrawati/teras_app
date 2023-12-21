@@ -1,6 +1,5 @@
 package com.bangkit.teras_app.ui.screen.home
 
-import android.location.Location
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

@@ -4,7 +4,6 @@ package com.bangkit.teras_app.ui.screen.home
 
 import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.collectIsDraggedAsState
@@ -109,7 +108,7 @@ fun HomeScreen(
             }
             is UiState.Error -> {
                 isShow = true
-                PopupDialog(isShow = true, onDismiss = { isShow = false }, message = "Connection Timeout"  )
+                PopupDialog("Gagal", isShow = true, onDismiss = { isShow = false }, message = "Connection Timeout"  )
             }
             else -> {}
         }
@@ -433,6 +432,7 @@ fun ScreenNearbyData(
 @Composable
 fun SurplusDart(rice: PredictionData) {
     val drawableIds = listOf(
+        R.drawable.beraskantong,
         R.drawable.beraskantong)
             Box(
                 modifier = Modifier
@@ -474,7 +474,7 @@ fun SurplusDart(rice: PredictionData) {
                             )
                         )
                         Text(
-                            text = "${rice.prediction}",
+                            text = "Total Produksi:\n${rice.prediction}",
                             style = TextStyle(
                                 fontFamily = plusjakartasansFontFamily,
                                 fontWeight = FontWeight.SemiBold,

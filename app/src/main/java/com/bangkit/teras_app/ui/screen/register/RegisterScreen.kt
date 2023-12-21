@@ -1,7 +1,6 @@
 package com.bangkit.teras_app.ui.screen.register
 
 import android.content.pm.ActivityInfo
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,6 +15,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,15 +40,17 @@ import com.bangkit.teras_app.ViewModelFactory
 import com.bangkit.teras_app.data.LockScreenOrientation
 import com.bangkit.teras_app.di.Injection
 import com.bangkit.teras_app.model.listProvince
+import com.bangkit.teras_app.ui.common.UiState
 import com.bangkit.teras_app.ui.components.EmailTextField
 import com.bangkit.teras_app.ui.components.NameTextField
 import com.bangkit.teras_app.ui.components.PasswordTextField
-import com.bangkit.teras_app.ui.components.SampleSpinner
+import com.bangkit.teras_app.ui.components.PopupDialog
+import com.bangkit.teras_app.ui.components.ProvinceSpinner
+import com.bangkit.teras_app.ui.navigation.Screen
 
 @Composable
 fun RegisterScreen(
     navController: NavHostController,
-    modifier: Modifier = Modifier,
     viewModel : RegisterViewModel = viewModel(factory = ViewModelFactory(Injection.provideRepository(LocalContext.current)))){
     LockScreenOrientation(orientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
 
@@ -55,6 +58,11 @@ fun RegisterScreen(
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var province by remember { mutableStateOf<Pair<String, String>>(Pair("", "")) }
+    var isShow by remember { mutableStateOf(false) }
+    var alertMessage by remember { mutableStateOf("") }
+    var status by remember { mutableStateOf("") }
+
+    val uiState by viewModel.uiState.collectAsState()
 
     Column(
         modifier = Modifier
@@ -81,7 +89,7 @@ fun RegisterScreen(
                 .fillMaxWidth())
 
         Text(
-            text = stringResource(R.string.username),
+            text = stringResource(R.string.name),
             fontWeight = FontWeight.Normal,
             color = colorResource(R.color.hitGray),
             fontSize = 16.sp,
@@ -108,11 +116,9 @@ fun RegisterScreen(
         PasswordTextField(onChangedText = {password = it})
 
 
-        SampleSpinner(list = listProvince,
+        ProvinceSpinner(list = listProvince,
             preselected = listProvince.first(),
             onSelectionChanged = { selection ->
-                Log.e("SELECTION DATA", selection.first )
-                Log.e("SELECTION SECOND", selection.second )
                 province = selection
             } )
 
@@ -129,6 +135,25 @@ fun RegisterScreen(
                     .fillMaxWidth()
             )
         }
+
+        LaunchedEffect(uiState){
+            when(uiState){
+            is UiState.Loading -> {
+            }is UiState.Success -> {
+                status = "Berhasil"
+                isShow = true
+                alertMessage = "Registrasi Berhasil"
+                navController.navigate(Screen.Login.route)
+            }is UiState.Error ->{
+                isShow = true
+                status = "Gagal"
+                alertMessage = "Email Sudah Terdaftar!"
+            }
+                else -> {}
+            }
+        }
+
+        PopupDialog(status = status, isShow = isShow, onDismiss = { isShow = false }, message = alertMessage)
 
         Column(
             modifier = Modifier.fillMaxWidth(),
