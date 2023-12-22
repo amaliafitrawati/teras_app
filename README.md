@@ -1,7 +1,8 @@
 <h1>TeRas App :ear_of_rice:</h1>
 
 
-<h3>Our Great Team <strong>(CH2-PS415)</strong> :raised_hands:</h3>
+
+## Our Great Team (CH2-PS415) :raised_hands:
 
 | Bangkit ID    | Name                    | University                      | Learning Path       |
 | ------------- |------------------------ | --------------------------------| ------------------- |
@@ -13,9 +14,11 @@
 | A258BSY2986   | Anargya Aryadaffa       | Universitas Muhammadiyah Malang | Mobile Development  |
       
 
-# TeRas (Rice Friend)
+
+# TeRas (Rice Friend) :ear_of_rice:
 
 TeRas (Rice Friend) could serve as a solution to these food security threats. The goal of this application is to monitor rice availability in the upcoming year. With this app, the aim is to control rice availability and preempt any future shortages by taking early mitigative measures.
+
 
 ## Features
 
@@ -35,16 +38,15 @@ The primary objectives of TeRas are:
 
 We chose this topic and project as a contribution to strengthening food security. We believe TeRas can address food availability issues in Indonesia. It's not just about monitoring rice but also about fostering community engagement in the agricultural and food sectors.
 
+## Repositories
+   1. Machine Learning 
+      - Endpoint : https://github.com/amaliafitrawati/teras_app/tree/ml-endpoint
+      - Path : https://github.com/amaliafitrawati/teras_app/tree/ml-path
+   2. Cloud Computing
+      - https://github.com/amaliafitrawati/teras_app/tree/cc-path
+   3. Mobile Development
+      - https://github.com/amaliafitrawati/teras_app/tree/master
+     
 ## Contributing
 
 We welcome contributions to TeRas. If you have any ideas, bug reports, or feature requests, feel free to open an issue or submit a pull request.
-
-
-<h3>Repositories</h3>
-   1. Machine Learning 
-      Endpoint : https://github.com/amaliafitrawati/teras_app/tree/ml-endpoint
-      Path : https://github.com/amaliafitrawati/teras_app/tree/ml-path
-   2. Cloud Computing
-      https://github.com/amaliafitrawati/teras_app/tree/cc-path
-   3. Mobile Development
-      https://github.com/amaliafitrawati/teras_app/tree/master
