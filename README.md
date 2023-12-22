@@ -15,7 +15,7 @@
       
 
 
-# TeRas (Rice Friend) :ear_of_rice:
+# TeRas (Rice Friend)
 
 TeRas (Rice Friend) could serve as a solution to these food security threats. The goal of this application is to monitor rice availability in the upcoming year. With this app, the aim is to control rice availability and preempt any future shortages by taking early mitigative measures.
 
