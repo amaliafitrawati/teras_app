@@ -26,3 +26,30 @@ TeRas (Teman Beras) is application
    [https://github.com/amaliafitrawati/teras_app/tree/cc-path] (https://github.com/amaliafitrawati/teras_app/tree/cc-path)
 3. Mobile Development 
    [https://github.com/amaliafitrawati/teras_app/tree/master] (https://github.com/amaliafitrawati/teras_app/tree/master)
+
+# TeRas (Rice Friend)
+
+TeRas (Rice Friend) could serve as a solution to these food security threats. The goal of this application is to monitor rice availability in the upcoming year. With this app, the aim is to control rice availability and preempt any future shortages by taking early mitigative measures.
+
+## Features
+
+- **Visual Mapping:** TeRas provides a visual mapping of rice availability in surplus and deficit values per province.
+- **Focused Monitoring:** This focused monitoring is expected to offer solutions for inter-regional rice stock distribution.
+- **Farmer's Forum:** TeRas offers a farmer's forum, providing a platform for farmers to share food-related information.
+
+## Objectives
+
+The primary objectives of TeRas are:
+
+1. **Ease Prediction and Monitoring:** TeRas will ease the prediction and monitoring of rice availability, providing valuable insights.
+2. **Visual Mapping:** The application offers visual mapping to help understand the distribution of rice availability.
+3. **Communication Platform:** TeRas provides a communication platform through the farmer's forum, fostering community engagement in the agricultural and food sectors.
+
+## Project Focus
+
+We chose this topic and project as a contribution to strengthening food security. We believe TeRas can address food availability issues in Indonesia. It's not just about monitoring rice but also about fostering community engagement in the agricultural and food sectors.
+
+## Contributing
+
+We welcome contributions to TeRas. If you have any ideas, bug reports, or feature requests, feel free to open an issue or submit a pull request.
+
