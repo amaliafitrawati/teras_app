@@ -41,8 +41,7 @@ We welcome contributions to TeRas. If you have any ideas, bug reports, or featur
 
 
 <h3>Repositories</h3>
-
-# 1. Machine Learning 
+   1. Machine Learning 
       Endpoint : https://github.com/amaliafitrawati/teras_app/tree/ml-endpoint
       Path : https://github.com/amaliafitrawati/teras_app/tree/ml-path
    2. Cloud Computing
